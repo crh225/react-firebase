@@ -66,6 +66,12 @@ jobs:
           command: |
             npm run build
       - run:
+          name: Setup firebase functions
+          command: |
+            cd functions
+            yarn
+            cd ..
+      - run:
           name: Deploy app to firebase
           command: |
             ./node_modules/.bin/firebase deploy --token=$FIREBASE
