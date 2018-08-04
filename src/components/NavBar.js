@@ -1,5 +1,5 @@
 import React from 'react'
-import {SearchBox} from 'office-ui-fabric-react/lib/SearchBox'
+import {SearchBox} from 'office-ui-fabric-react/lib-commonjs/SearchBox'
 import '../_styles/NavBar.css'
 
 const NavBar = ({onChange, onSearch}) => (
