@@ -1,4 +1,5 @@
 This is a react app generated from create react app. It is using firebase for webhosting and DB, and circle CI for Continuous integration
+
 [![CircleCI](https://circleci.com/gh/crh225/react-firebase.svg?style=svg)](https://circleci.com/gh/crh225/react-firebase)
 
 
