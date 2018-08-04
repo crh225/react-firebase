@@ -1,0 +1,83 @@
+version: 2
+jobs:
+  test-job:
+    docker:
+      #- image: circleci/node:8.11-browsers
+      - image: circleci/node:8.11-browsers
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
+      - run:
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run frontend tests
+          command: |
+            yarn test
+            #pwd
+            #ls
+            #./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.frontend.json src/coverage/lcov.info
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            #./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.frontend.json
+
+  deploy-job:
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: yarn
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build app in production mode
+          command: |
+            npm run build
+      - run:
+          name: Deploy app to firebase
+          command: |
+            ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - test-job
+      - deploy-job:
+          requires:
+            - test-job
+          filters:
+            branches:
+              only: master
