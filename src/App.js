@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fabric } from 'office-ui-fabric-react/lib-commonjs/Fabric';
-import { SidebarMenu, Footer, Content, NavBar } from './components';
+import * as comp from './components';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 class App extends React.Component {
@@ -9,18 +9,18 @@ class App extends React.Component {
       <Router>
         <Fabric className="App">
           <div className="header">
-            <NavBar />
+            <comp.NavBar />
           </div>
           <div className="body">
             <div className="content">
-              <Content />
+              <comp.Content />
             </div>
             <div className="sidebar">
-              <SidebarMenu />
+              <comp.SidebarMenu />
             </div>
           </div>
           <div className="footer">
-            <Footer />
+            <comp.Footer />
           </div>
         </Fabric>
       </Router>
