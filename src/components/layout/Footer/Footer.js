@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'office-ui-fabric-react/lib-commonjs/Link'
-import '../_styles/Footer.css'
+import './Footer.css'
 
 const Footer = () => (
   <div className="footer-container">

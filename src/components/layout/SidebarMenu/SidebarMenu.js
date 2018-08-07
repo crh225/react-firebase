@@ -1,5 +1,5 @@
 import React from 'react'
-import '../_styles/SideBarMenu.css'
+import './SideBarMenu.css'
 import {Link} from 'react-router-dom';
 
 const SidebarMenu = ({groups, expanded, collapsed}) => (

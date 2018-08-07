@@ -1,4 +1,2 @@
-export { default as SidebarMenu } from "./SidebarMenu";
-export { default as Content } from "./Content";
-export { default as Footer } from "./Footer";
-export { default as NavBar } from "./NavBar";
+export { Content, Footer, SidebarMenu, NavBar } from "./layout";
+export { HelloWorld } from "./HelloWorld";

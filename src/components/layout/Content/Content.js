@@ -1,7 +1,7 @@
 import React from 'react';
-import HelloWorld from './HelloWorld.js';
+import { HelloWorld } from '../../HelloWorld';
 import {Route} from 'react-router-dom';
-import '../_styles/Content.css';
+import './Content.css';
 
 class Content extends React.Component {
   render() {
